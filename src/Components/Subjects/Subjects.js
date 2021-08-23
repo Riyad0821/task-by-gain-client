@@ -13,7 +13,7 @@ const Subjects = () => {
     return (
         <div>
             <div>
-                <button>Add Subject</button>
+                <a href="/newsubject">Add Subject</a>
             </div>
             <Query query={allSubjectsQuery}>
                 {({ loading, error, data }) => {

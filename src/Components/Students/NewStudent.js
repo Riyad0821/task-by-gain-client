@@ -1,81 +1,190 @@
 import React from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { useHistory } from "react-router-dom";
+import { useInput } from "../Utils/Utils";
+import { Button, Modal } from "react-bootstrap";
 
 const CREATE_STUDENT = gql`
-  mutation createStudent(
+  mutation addStudent(
       $name: String!,
       $email: String!,
       $phone: String!,
       $dob: String!) {
-          createStudent(
+          addStudent(
               name: $name,
               email: $email,
               phone: $phone,
               dob: $dob) {
                   _id
-              }
-      }
-      `;
+        }
+    }
+`;
 
-const NewStudent = () => {
-    let name, email, phone, dob;
+const NewStudent = ({ show, handleClose }) => {
+    const { value: name, bind: bindName, reset: resetName } = useInput("");
+    const { value: email, bind: bindEmail, reset: resetEmail } = useInput("");
+    const { value: phone, bind: bindPhone, reset: resetPhone } = useInput("");
+    const { value: dob, bind: bindDob, reset: resetDob } = useInput("");
+
     return (
-        <Mutation mutation={CREATE_STUDENT} onCompleted={() => useHistory.push('/')}>
-            {(createStudent, { loading, error }) => (
-                <div className="container m-t-20">
-                    <h1 className="page-title">New Student</h1>
-
-                    <div className="newnote-page m-t-20">
-                        <form onSubmit={e => {
-                            e.preventDefault();
-                            createStudent({ variables: { name: name.value, email: email.value, phone: phone.value, dob: dob.value } });
-                            name.value = "";
-                            email.value = "";
-                            phone.value = "";
-                            dob.value = "";
-                        }}>
-                            <div className="field">
-                                <label className="label">Name</label>
-                                <div className="control">
-                                    <input className="input" type="text" placeholder="Name" name="name" />
-                                </div>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>New Student</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Mutation mutation={CREATE_STUDENT} onCompleted={() =>
+                    window.location.reload()}>
+                    {(addStudent, { loading, error }) => (
+                        <div className="container m-t-20">
+                            <div className="m-t-20">
+                                <form
+                                    onSubmit={e => {
+                                        e.preventDefault();
+                                        addStudent({ variables: { name: name, email: email, phone: phone, dob: dob } });
+                                        resetName();
+                                        resetEmail();
+                                        resetPhone();
+                                        resetDob();
+                                        handleClose();
+                                    }}
+                                >
+                                    <div className="form-group">
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="name"
+                                            placeholder="Name"
+                                            value={name}
+                                            required
+                                            {...bindName}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="email"
+                                            placeholder="Email"
+                                            value={email}
+                                            required
+                                            {...bindEmail}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="phone">Phone</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="phone"
+                                            placeholder="Phone"
+                                            value={phone}
+                                            required
+                                            {...bindPhone}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="dob">Date of Birth</label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="dob"
+                                            placeholder="Date of Birth"
+                                            value={dob}
+                                            required
+                                            {...bindDob}
+                                        />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary m-3">
+                                        Create Student
+                                    </button>
+                                </form>
+                                {loading && <p>Loading...</p>}
+                                {error && <p>Error :( Please try again</p>}
                             </div>
+                        </div>)}
+                </Mutation >
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" className="" onClick={handleClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
 
-                            <div className="field">
-                                <label className="label">Email</label>
-                                <div className="control">
-                                    <input className="input" type="email" placeholder="Email" name="email" />
-                                </div>
-                            </div>
 
-                            <div className="field">
-                                <label className="label">Phone</label>
-                                <div className="control">
-                                    <input className="input" type="text" placeholder="Phone" name="phone" />
-                                </div>
-                            </div>
 
-                            <div className="field">
-                                <label className="label">Date of Birth</label>
-                                <div className="control">
-                                    <input className="input" type="datetime-local" placeholder="Date of Birth" name="dob" />
-                                </div>
-                            </div>
+        // <Mutation mutation={CREATE_STUDENT} onCompleted={() =>
+        //     history.push("/students")}>
+        //     {(addStudent, { loading, error }) => (
+        //         <div className="container m-t-20">
+        //             <h1 className="page-title">New Student</h1>
 
-                            <div class="field">
-                                <div class="control">
-                                    <button type="submit" class="button">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                        {loading && <p>Loading...</p>}
-                        {error && <p>Error :( Please try again</p>}
-                    </div>
-                </div>)}
-        </Mutation>
-
+        //             <div className="newnote-page m-t-20">
+        //                 <form
+        //                     onSubmit={e => {
+        //                         e.preventDefault();
+        //                         addStudent({ variables: { name: name, email: email, phone: phone, dob: dob } });
+        //                         resetName();
+        //                         resetEmail();
+        //                         resetPhone();
+        //                         resetDob();
+        //                     }}
+        //                 >
+        //                     <div className="form-group">
+        //                         <label htmlFor="name">Name</label>
+        //                         <input
+        //                             type="text"
+        //                             className="form-control"
+        //                             id="name"
+        //                             placeholder="Name"
+        //                             value={name}
+        //                             {...bindName}
+        //                         />
+        //                     </div>
+        //                     <div className="form-group">
+        //                         <label htmlFor="email">Email</label>
+        //                         <input
+        //                             type="text"
+        //                             className="form-control"
+        //                             id="email"
+        //                             placeholder="Email"
+        //                             value={email}
+        //                             {...bindEmail}
+        //                         />
+        //                     </div>
+        //                     <div className="form-group">
+        //                         <label htmlFor="phone">Phone</label>
+        //                         <input
+        //                             type="text"
+        //                             className="form-control"
+        //                             id="phone"
+        //                             placeholder="Phone"
+        //                             value={phone}
+        //                             {...bindPhone}
+        //                         />
+        //                     </div>
+        //                     <div className="form-group">
+        //                         <label htmlFor="dob">Date of Birth</label>
+        //                         <input
+        //                             type="date"
+        //                             className="form-control"
+        //                             id="dob"
+        //                             placeholder="Date of Birth"
+        //                             value={dob}
+        //                             {...bindDob}
+        //                         />
+        //                     </div>
+        //                     <button type="submit" className="btn btn-primary m-3">
+        //                         Create Student
+        //                     </button>
+        //                 </form>
+        //                 {loading && <p>Loading...</p>}
+        //                 {error && <p>Error :( Please try again</p>}
+        //             </div>
+        //         </div>)}
+        // </Mutation >
     )
 }
 

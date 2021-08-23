@@ -13,6 +13,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Subjects from './Components/Subjects/Subjects';
 import NewStudent from './Components/Students/NewStudent';
 import EditStudent from './Components/Students/EditStudent';
+import NewSubject from './Components/Subjects/NewSubject';
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
@@ -34,8 +35,11 @@ function App() {
             <Route path="/newstudent">
               <NewStudent />
             </Route>
-            <Route path="/editstudent">
+            <Route path="/editstudent/:id">
               <EditStudent />
+            </Route>
+            <Route path="/newsubject">
+              <NewSubject />
             </Route>
             <Route exact path="/">
             </Route>
