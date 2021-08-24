@@ -1,22 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
-import { Mutation, Query } from "react-apollo";
-import { useHistory } from "react-router-dom";
-import { useInput } from "../Utils/Utils";
-import { useParams } from 'react-router-dom';
-
-
-const GET_STUDENT = gql`
-    query student($id: ID!) {
-        student(id: $id) {
-            _id
-            name
-            email
-            phone
-            dob
-        }
-    }
-`;
+import { Mutation } from "react-apollo";
+import { Button, Modal } from "react-bootstrap";
 
 const UPDATE_STUDENT = gql`
   mutation updateStudent(
@@ -36,104 +21,99 @@ const UPDATE_STUDENT = gql`
     }
 `;
 
-const NewStudent = () => {
-    const { value: name, bind: bindName, reset: resetName } = useInput("");
-    const { value: email, bind: bindEmail, reset: resetEmail } = useInput("");
-    const { value: phone, bind: bindPhone, reset: resetPhone } = useInput("");
-    const { value: dob, bind: bindDob, reset: resetDob } = useInput("");
-
-    const history = useHistory();
-
-    const { id } = useParams();
-    console.log(id);
+const EditStudent = ({ show, handleClose, _id, name, email, phone, dob }) => {
+    const [sname, setSname] = useState(name);
+    const [semail, setSmail] = useState(email);
+    const [sphone, setSphone] = useState(phone);
+    const [sdob, setSdob] = useState(dob);
 
     return (
-        <Query query={GET_STUDENT} variables={{ id: id }}>
-            {({ loading, error, data }) => {
-                if (loading) return <div>Loading...</div>;
-                if (error) return <div>{error.message}</div>;
-                const { student } = data;
-                const { name: studentName, email: studentEmail, phone: studentPhone, dob: studentDob } = student;
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Update Student</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Mutation mutation={UPDATE_STUDENT} onCompleted={() =>
+                    window.location.reload()}>
+                    {(updateStudent, { loading, error }) => (
+                        <div className="container m-t-20">
+                            <div className="m-t-20">
+                                <form
+                                    onSubmit={e => {
+                                        e.preventDefault();
+                                        updateStudent({ variables: { id: _id, name: sname, email: semail, phone: sphone, dob: sdob } });
+                                        handleClose();
+                                        window.location.reload();
+                                    }}
+                                >
+                                    <div className="form-group">
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="name"
+                                            placeholder="Name"
+                                            // value={name}
+                                            defaultValue={name}
+                                            onChange={e => setSname(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="email"
+                                            placeholder="Email"
+                                            defaultValue={email}
+                                            onChange={
+                                                e => setSmail(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="phone">Phone</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="phone"
+                                            placeholder="Phone"
+                                            defaultValue={phone}
+                                            onChange={
+                                                e => setSphone(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="dob">Date of Birth</label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="dob"
+                                            placeholder="Date of Birth"
+                                            defaultValue={dob}
+                                            onChange={
+                                                e => setSdob(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary m-3">
+                                        Save Changes
+                                    </button>
+                                </form>
+                                {loading && <p>Loading...</p>}
+                                {error && <p>Error :( Please try again</p>}
+                            </div>
+                        </div>)}
+                </Mutation >
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" className="" onClick={handleClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
 
-                return (
-                    <Mutation mutation={UPDATE_STUDENT} onCompleted={() =>
-                        history.push("/students")}>
-                        {(updateStudent, { loading, error }) => (
-                            <div className="container m-t-20">
-                                <h1 className="">Update Student</h1>
-
-                                <div className="m-t-20">
-                                    <form
-                                        onSubmit={e => {
-                                            e.preventDefault();
-                                            updateStudent({ variables: { id: id, name: name, email: email, phone: phone, dob: dob } });
-                                            resetName();
-                                            resetEmail();
-                                            resetPhone();
-                                            resetDob();
-                                        }}
-                                    >
-                                        <div className="form-group">
-                                            <label htmlFor="name">Name</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="name"
-                                                placeholder="Name"
-                                                defaultValue={studentName}
-                                                value={name}
-                                                {...bindName}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="email">Email</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="email"
-                                                placeholder="Email"
-                                                defaultValue={studentEmail}
-                                                value={email}
-                                                {...bindEmail}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="phone">Phone</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="phone"
-                                                placeholder="Phone"
-                                                defaultValue={studentPhone}
-                                                value={phone}
-                                                {...bindPhone}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="dob">Date of Birth</label>
-                                            <input
-                                                type="date"
-                                                className="form-control"
-                                                id="dob"
-                                                placeholder="Date of Birth"
-                                                defaultValue={studentDob}
-                                                value={dob}
-                                                {...bindDob}
-                                            />
-                                        </div>
-                                        <button type="submit" className="btn btn-primary">
-                                            Create Student
-                                        </button>
-                                    </form>
-                                    {loading && <p>Loading...</p>}
-                                    {error && <p>Error :( Please try again</p>}
-                                </div>
-                            </div>)}
-                    </Mutation >
-                );
-            }}
-        </Query>
-    );
-};
-
-export default React.forwardRef(NewStudent);
+export default EditStudent;

@@ -33,7 +33,6 @@ const Students = () => {
     return (
         <div>
             <div className="flex">
-                {/* <a href="/newstudent" className="btn btn-primary m-3">Add Student</a> */}
                 <button onClick={handleShow} className="btn btn-primary m-3">Add Student</button>
                 <NewStudent handleClose={handleClose} show={show} />
             </div>

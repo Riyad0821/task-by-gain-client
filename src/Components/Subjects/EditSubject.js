@@ -1,42 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { useHistory } from "react-router-dom";
-import { useInput } from "../Utils/Utils";
 import { Button, Modal } from "react-bootstrap";
 
-const CREATE_SUBJECT = gql`
-  mutation addSubject(
-      $name: String!){
-          addSubject(
-              name: $name){ 
+const UPDATE_SUBJECT = gql`
+  mutation updateSubject(
+      $id: ID!,
+      $name: String!) {
+        updateSubject(
+              id: $id,
+              name: $name) {
                   _id
         }
     }
 `;
 
-const NewSubject = ({ show, handleClose }) => {
-    const { value: name, bind: bindName, reset: resetName } = useInput("");
-
-    const history = useHistory();
+const EditSubject = ({ show, handleClose, _id, name }) => {
+    const [sname, setSname] = useState(name);
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>New Subject</Modal.Title>
+                <Modal.Title>Update Subject</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Mutation mutation={CREATE_SUBJECT} onCompleted={() =>
-                    history.push("/subjects")}>
-                    {(addSubject, { loading, error }) => (
+                <Mutation mutation={UPDATE_SUBJECT} onCompleted={() =>
+                    window.location.reload()}>
+                    {(updateStudent, { loading, error }) => (
                         <div className="container m-t-20">
-                            <div className=" m-t-20">
+                            <div className="m-t-20">
                                 <form
                                     onSubmit={e => {
                                         e.preventDefault();
-                                        addSubject({ variables: { name: name } });
-                                        resetName();
+                                        updateStudent({ variables: { id: _id, name: sname } });
                                         handleClose();
+                                        window.location.reload();
                                     }}
                                 >
                                     <div className="form-group">
@@ -46,13 +44,14 @@ const NewSubject = ({ show, handleClose }) => {
                                             className="form-control"
                                             id="name"
                                             placeholder="Name"
-                                            value={name}
-                                            {...bindName}
+                                            // value={name}
+                                            defaultValue={name}
+                                            onChange={e => setSname(e.target.value)}
+                                            required
                                         />
                                     </div>
-
                                     <button type="submit" className="btn btn-primary m-3">
-                                        Create Subject
+                                        Save Changes
                                     </button>
                                 </form>
                                 {loading && <p>Loading...</p>}
@@ -67,8 +66,7 @@ const NewSubject = ({ show, handleClose }) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-
     )
 }
 
-export default NewSubject;
+export default EditSubject;

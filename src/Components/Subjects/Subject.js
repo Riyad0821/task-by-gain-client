@@ -2,38 +2,36 @@ import { Button } from 'react-bootstrap';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import EditStudent from './EditStudent';
+import EditSubject from './EditSubject';
 
-const DELETE_STUDENT = gql`
-mutation deleteStudent(
+const DELETE_SUBJECT = gql`
+mutation deleteSubject(
     $id: ID!){
-        deleteStudent(
+        deleteSubject(
             id: $id){
                 _id
             }
         }`;
 
-const Student = ({ _id, name, email, phone, dob }) => {
+const Student = ({ _id, name }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    console.log(_id);
 
     return (
         <>
             <tr>
                 <td> <p>{name}</p> </td>
-                <td>{email}</td>
-                <td>{phone}</td>
-                <td>{dob}</td>
                 <td>
                     <Button variant="secondary" onClick={handleShow}>
                         Edit
                     </Button>
-                    <EditStudent show={show} onHide={handleClose} _id={_id} name={name} email={email} phone={phone} dob={dob} />
+                    <EditSubject show={show} handleClose={handleClose} _id={_id} name={name} />
                 </td>
                 <td>
-                    <Mutation mutation={DELETE_STUDENT} variables={{ id: _id }} onCompleted={() =>
+                    <Mutation mutation={DELETE_SUBJECT} variables={{ id: _id }} onCompleted={() =>
                         window.location.reload()}>
                         {action => (
                             <button onClick={action} className="btn btn-danger">Delete</button>
