@@ -1,8 +1,8 @@
-import { Button } from 'react-bootstrap';
-import gql from 'graphql-tag';
-import React, { useState } from 'react';
-import { Mutation } from 'react-apollo';
-import EditStudent from './EditStudent';
+import { Button } from "react-bootstrap";
+import gql from "graphql-tag";
+import React, { useState } from "react";
+import { Mutation } from "react-apollo";
+import EditStudent from "./EditStudent";
 
 const DELETE_STUDENT = gql`
 mutation deleteStudent(
@@ -15,7 +15,6 @@ mutation deleteStudent(
 
 const Student = ({ _id, name, email, phone, dob }) => {
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 

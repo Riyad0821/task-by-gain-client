@@ -113,7 +113,7 @@ const EditStudent = ({ show, handleClose, _id, name, email, phone, dob }) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-    )
-}
+    );
+};
 
 export default EditStudent;

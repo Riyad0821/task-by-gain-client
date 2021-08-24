@@ -63,7 +63,7 @@ const NewStudent = ({ show, handleClose }) => {
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="Email"
-                                                {...register('email',
+                                                {...register("email",
                                                     {
                                                         required: "Email is required",
                                                         pattern: {
@@ -114,7 +114,7 @@ const NewStudent = ({ show, handleClose }) => {
                                     {loading && <p>Loading...</p>}
                                     {error && <p>Error :( Please try again</p>}
                                 </div>
-                            </div>)
+                            </div>);
                     }}
                 </Mutation >
             </Modal.Body>
@@ -124,7 +124,7 @@ const NewStudent = ({ show, handleClose }) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-    )
-}
+    );
+};
 
 export default NewStudent;

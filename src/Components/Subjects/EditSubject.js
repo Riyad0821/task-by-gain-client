@@ -66,7 +66,7 @@ const EditSubject = ({ show, handleClose, _id, name }) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-    )
-}
+    );
+};
 
 export default EditSubject;

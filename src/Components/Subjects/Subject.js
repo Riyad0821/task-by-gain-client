@@ -1,8 +1,8 @@
-import { Button } from 'react-bootstrap';
-import gql from 'graphql-tag';
-import React, { useState } from 'react';
-import { Mutation } from 'react-apollo';
-import EditSubject from './EditSubject';
+import { Button } from "react-bootstrap";
+import gql from "graphql-tag";
+import React, { useState } from "react";
+import { Mutation } from "react-apollo";
+import EditSubject from "./EditSubject";
 
 const DELETE_SUBJECT = gql`
 mutation deleteSubject(

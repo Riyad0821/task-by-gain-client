@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import Students from './Components/Students/Students';
-import Navbar from './Components/Navbar/Navbar';
-import Subjects from './Components/Subjects/Subjects';
-import NewStudent from './Components/Students/NewStudent';
-import EditStudent from './Components/Students/EditStudent';
-import NewSubject from './Components/Subjects/NewSubject';
+import Students from "./Components/Students/Students";
+import Navbar from "./Components/Navbar/Navbar";
+import Subjects from "./Components/Subjects/Subjects";
+import NewStudent from "./Components/Students/NewStudent";
+import EditStudent from "./Components/Students/EditStudent";
+import NewSubject from "./Components/Subjects/NewSubject";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"

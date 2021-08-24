@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import NewSubject from './NewSubject';
+import NewSubject from "./NewSubject";
 import Subject from "./Subject";
 
 const allSubjectsQuery = gql`
@@ -10,7 +10,7 @@ query{
       _id
       name
     }
-  }`
+  }`;
 
 const Subjects = () => {
     const [show, setShow] = useState(false);
@@ -40,7 +40,7 @@ const Subjects = () => {
                                 ))}
                             </tbody>
                         </table>
-                    )
+                    );
                 }}
             </Query>
         </div>

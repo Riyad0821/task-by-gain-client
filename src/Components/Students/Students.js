@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Student from "./Student";
-import NewStudent from './NewStudent';
-// import { Mutation } from "react-apollo";
+import NewStudent from "./NewStudent";
 
 const allStudentsQuery = gql`
 query{
@@ -14,7 +13,7 @@ query{
       phone
       dob
     }
-  }`
+  }`;
 
 // const DEL_STUDENT = gql`
 // mutation deleteStudent(

@@ -67,8 +67,7 @@ const NewSubject = ({ show, handleClose }) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-
-    )
-}
+    );
+};
 
 export default NewSubject;
