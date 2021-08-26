@@ -29,7 +29,7 @@ const Student = ({ _id, name, email, phone, dob }) => {
                     <Button variant="secondary" onClick={handleShow}>
                         Edit
                     </Button>
-                    <EditStudent show={show} onHide={handleClose} _id={_id} name={name} email={email} phone={phone} dob={dob} />
+                    <EditStudent show={show} handleClose={handleClose} _id={_id} name={name} email={email} phone={phone} dob={dob} />
                 </td>
                 <td>
                     <Mutation mutation={DELETE_STUDENT} variables={{ id: _id }} onCompleted={() =>
