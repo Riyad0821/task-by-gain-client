@@ -1,22 +1,13 @@
 import { Button } from "react-bootstrap";
-import gql from "graphql-tag";
 import React, { useState } from "react";
-import { Mutation } from "react-apollo";
 import EditStudent from "./EditStudent";
+import RemoveStudent from "./RemoveStudent";
 
-const DELETE_STUDENT = gql`
-mutation deleteStudent(
-    $id: ID!){
-        deleteStudent(
-            id: $id){
-                _id
-            }
-        }`;
-
-const Student = ({ _id, name, email, phone, dob }) => {
+const Student = ({ student }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const { _id, name, email, phone, dob } = student;
 
     return (
         <>
@@ -32,12 +23,7 @@ const Student = ({ _id, name, email, phone, dob }) => {
                     <EditStudent show={show} handleClose={handleClose} _id={_id} name={name} email={email} phone={phone} dob={dob} />
                 </td>
                 <td>
-                    <Mutation mutation={DELETE_STUDENT} variables={{ id: _id }} onCompleted={() =>
-                        window.location.reload()}>
-                        {action => (
-                            <button onClick={action} className="btn btn-danger">Delete</button>
-                        )}
-                    </Mutation>
+                    <RemoveStudent _id={_id} />
                 </td>
             </tr>
         </>

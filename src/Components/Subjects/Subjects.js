@@ -1,32 +1,23 @@
 import React, { useState } from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import NewSubject from "./NewSubject";
 import Subject from "./Subject";
-
-const allSubjectsQuery = gql`
-query{
-    subjects{
-      _id
-      name
-    }
-  }`;
+import { useQuery } from "@apollo/client";
+import { GET_SUBJECTS } from "../Queries/Queries";
 
 const Subjects = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const { data, loading, error } = useQuery(GET_SUBJECTS);
     return (
         <div>
             <div>
                 <button onClick={handleShow} className="btn btn-primary m-3">Add Subject</button>
                 <NewSubject handleClose={handleClose} show={show} />
             </div>
-            <Query query={allSubjectsQuery}>
-                {({ loading, error, data }) => {
-                    if (loading) return <p>Loading...</p>;
-                    if (error) return <p>Error :(</p>;
-                    return (
+            {
+                loading ? <h1>Loading...</h1> :
+                    error ? <h1>Error</h1> :
                         <table className="table table-striped">
                             <thead>
                                 <tr>
@@ -40,10 +31,8 @@ const Subjects = () => {
                                 ))}
                             </tbody>
                         </table>
-                    );
-                }}
-            </Query>
-        </div>
+            }
+        </div >
     );
 };
 

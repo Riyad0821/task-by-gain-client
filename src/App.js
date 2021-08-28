@@ -6,15 +6,32 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Students from "./Components/Students/Students";
 import Navbar from "./Components/Navbar/Navbar";
 import Subjects from "./Components/Subjects/Subjects";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache()
 });
+
+// const client = new ApolloClient({
+//   uri: "http://localhost:4000/graphql",
+//   cache: new InMemoryCache({
+//     typePolicies: {
+//       Query: {
+//         fields: {
+//           students: {
+//             merge(existing = [], incoming) {
+//               return { ...existing, ...incoming };
+//             }
+//           }
+//         }
+//       }
+//     }
+//   })
+// });
 
 function App() {
   return (
@@ -30,7 +47,7 @@ function App() {
               <Subjects />
             </Route>
             <Route exact path="/">
-              <Students />
+              {/* <Students /> */}
             </Route>
           </Switch>
         </Router>
