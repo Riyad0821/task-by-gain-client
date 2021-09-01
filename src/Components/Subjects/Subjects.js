@@ -22,12 +22,13 @@ const Subjects = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Students</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.subjects.map(({ _id, name }) => (
-                                    <Subject key={_id} _id={_id} name={name} />
+                                {data.subjects.map(({ _id, name, students }) => (
+                                    <Subject key={_id} _id={_id} name={name} students={students} />
                                 ))}
                             </tbody>
                         </table>

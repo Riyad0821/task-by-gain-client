@@ -25,6 +25,7 @@ const Students = () => {
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Date of Birth</th>
+                                    <th>Subjects</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>

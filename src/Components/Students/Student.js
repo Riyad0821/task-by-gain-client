@@ -1,13 +1,11 @@
-import { Button } from "react-bootstrap";
-import React, { useState } from "react";
+import React from "react";
 import EditStudent from "./EditStudent";
 import RemoveStudent from "./RemoveStudent";
+import AssignSubjects from "./AssignSubjects";
+import AssignSubjectList from "./AssignSubjectList";
 
 const Student = ({ student }) => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const { _id, name, email, phone, dob } = student;
+    const { _id, name, email, phone, dob, subjects } = student;
 
     return (
         <>
@@ -16,14 +14,16 @@ const Student = ({ student }) => {
                 <td>{email}</td>
                 <td>{phone}</td>
                 <td>{dob}</td>
+                <td>{subjects.map((subject) => <AssignSubjectList key={subject._id} subject={subject} studentId={_id} ></AssignSubjectList>
+                )}</td>
                 <td>
-                    <Button variant="secondary" onClick={handleShow}>
-                        Edit
-                    </Button>
-                    <EditStudent show={show} handleClose={handleClose} _id={_id} name={name} email={email} phone={phone} dob={dob} />
+                    <EditStudent _id={_id} name={name} email={email} phone={phone} dob={dob} />
                 </td>
                 <td>
                     <RemoveStudent _id={_id} />
+                </td>
+                <td>
+                    <AssignSubjects studentId={_id} />
                 </td>
             </tr>
         </>

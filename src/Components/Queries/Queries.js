@@ -8,6 +8,10 @@ query{
       email
       phone
       dob
+      subjects{
+        _id
+        name
+      }
     }
   }`;
 
@@ -16,6 +20,10 @@ query{
     subjects{
       _id
       name
+      students{
+        _id
+        name
+        }
     }
   }`;
 
@@ -92,3 +100,28 @@ mutation updateSubject(
       }
   }
 `;
+
+export const ASSIGN_SUBJECT = gql`
+mutation addSubjectToStudent(
+    $studentId: ID!,
+    $subjectId: ID!) {
+        addSubjectToStudent(
+            studentId: $studentId,
+            subjectId: $subjectId) {
+                _id
+        }
+    }
+`;
+
+export const DELETE_SUBJECT_FROM_STUDENT = gql`
+mutation deleteSubjectFromStudent(
+    $studentId: ID!,
+    $subjectId: ID!) {
+        deleteSubjectFromStudent(
+            studentId: $studentId,
+            subjectId: $subjectId) {
+                _id
+        }
+    }
+`;
+
