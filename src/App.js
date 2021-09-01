@@ -10,6 +10,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Students from "./Components/Students/Students";
 import Navbar from "./Components/Navbar/Navbar";
 import Subjects from "./Components/Subjects/Subjects";
+import Chart from "./Components/Chart";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -46,8 +47,11 @@ function App() {
             <Route path="/subjects">
               <Subjects />
             </Route>
+            <Route path="/chart">
+              <Chart />
+            </Route>
             <Route exact path="/">
-              {/* <Students /> */}
+              <Students />
             </Route>
           </Switch>
         </Router>
