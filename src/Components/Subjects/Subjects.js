@@ -11,6 +11,8 @@ const Subjects = () => {
     const { data, loading, error } = useQuery(GET_SUBJECTS);
     return (
         <div>
+            <h4 className="text-center  m-3 text-success">Subjects</h4>
+            <hr />
             <div>
                 <button onClick={handleShow} className="btn btn-primary m-3">Add Subject</button>
                 <NewSubject handleClose={handleClose} show={show} />

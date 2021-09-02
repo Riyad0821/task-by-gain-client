@@ -1,9 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_SUBJECT, GET_SUBJECTS } from "../Queries/Queries";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const RemoveSubject = ({ _id }) => {
-    const [removeSubject] = useMutation(DELETE_SUBJECT);
+    const [removeSubject, { loading }] = useMutation(DELETE_SUBJECT);
     const handleRemoveSubject = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -23,7 +25,9 @@ const RemoveSubject = ({ _id }) => {
     };
 
     return (
-        <button onClick={handleRemoveSubject} className="btn btn-danger"> Delete</button>
+        <button onClick={handleRemoveSubject} className="btn btn-danger" disabled={loading}>
+            {loading ? <FontAwesomeIcon icon={faSpinner} /> : <FontAwesomeIcon icon={faTrash} />}
+        </button>
     );
 };
 

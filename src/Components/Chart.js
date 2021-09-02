@@ -1,17 +1,15 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Container } from "react-bootstrap";
 import { Doughnut } from "react-chartjs-2";
 import { GET_SUBJECTS } from "./Queries/Queries";
 
 const Chart = () => {
-    const { data: sData, loading, error } = useQuery(GET_SUBJECTS);
-    console.log(sData);
-    const data = {
-        labels: sData && sData.subjects.map((subject) => subject.name),
+    const { data, loading, error } = useQuery(GET_SUBJECTS);
+    const chartData = {
+        labels: data && data.subjects.map((subject) => subject.name),
         datasets: [
             {
-                data: sData && sData.subjects.map((subject) => subject.students.length),
+                data: data && data.subjects.map((subject) => subject.students.length),
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -33,14 +31,21 @@ const Chart = () => {
         ],
     };
     return (
-        <Container>
-            {loading ? (
-                <div>Loading...</div>
-            ) : (
-                <Doughnut data={data} width={50}
-                    height={25} />
-            )}
-        </Container>
+        <div>
+            <h4 className="text-center  m-3 text-success">Students per Subject</h4>
+            <hr />
+            <h5 className="text-center  m-3 text-primary">Doughnut Chart</h5>
+            <div>
+                {loading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <Doughnut data={chartData} options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }} />
+                )}
+            </div>
+        </div>
     );
 };
 

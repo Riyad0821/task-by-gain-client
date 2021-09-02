@@ -1,9 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_STUDENT, GET_STUDENTS } from "../Queries/Queries";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const RemoveStudent = ({ _id }) => {
-    const [removeStudent] = useMutation(DELETE_STUDENT);
+    const [removeStudent, { loading, error }] = useMutation(DELETE_STUDENT);
     const handleRemoveStudent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -23,7 +25,9 @@ const RemoveStudent = ({ _id }) => {
     };
 
     return (
-        <button onClick={handleRemoveStudent} className="btn btn-danger"> Delete</button>
+        <>
+            <button onClick={handleRemoveStudent} className="btn btn-danger" disabled={loading} > {loading ? <FontAwesomeIcon icon={faSpinner} /> : <FontAwesomeIcon icon={faTrash} />}</button>
+        </>
     );
 };
 

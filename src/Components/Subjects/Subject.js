@@ -1,16 +1,16 @@
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import React, { useState } from "react";
 import EditSubject from "./EditSubject";
 import RemoveSubject from "./RemoveSubject";
 
-// const students = [{ id: 1, name: "John" }, { id: 2, name: "Mary" }];
-
 const studentList = (students) => {
     const studentList = students.map((student) => {
         return (
-            <li key={student.id}>
-                {student.name}
-            </li>
+            <Container key={student.id}>
+                <Row>
+                    <Col><span>{student.name}</span></Col>
+                </Row>
+            </Container>
         );
     });
     return studentList;

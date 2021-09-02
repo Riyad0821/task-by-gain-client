@@ -11,6 +11,8 @@ const Students = () => {
     const { loading, error, data } = useQuery(GET_STUDENTS);
     return (
         <div>
+            <h4 className="text-center  m-3 text-success">Students</h4>
+            <hr />
             <div className="flex">
                 <button onClick={handleShow} className="btn btn-primary m-3">Add Student</button>
                 <NewStudent handleClose={handleClose} show={show} />
