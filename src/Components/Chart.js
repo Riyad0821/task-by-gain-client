@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Pie } from "react-chartjs-2";
 import { GET_SUBJECTS } from "./Queries/Queries";
 
 const Chart = () => {
@@ -40,6 +40,17 @@ const Chart = () => {
                     <div>Loading...</div>
                 ) : (
                     <Doughnut data={chartData} options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }} />
+                )}
+            </div>
+            <h5 className="text-center  m-3 text-primary">Pie Chart</h5>
+            <div>
+                {loading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <Pie data={chartData} options={{
                         responsive: true,
                         maintainAspectRatio: false,
                     }} />

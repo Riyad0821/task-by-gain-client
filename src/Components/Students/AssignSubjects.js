@@ -15,13 +15,13 @@ const AssignSubjects = ({ studentId }) => {
             <Button variant="secondary" onClick={handleShow} >Assign Subject</Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Update Student</Modal.Title>
+                    <Modal.Title>Assign Subject</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="m-t-20">
                         <form>
                             <div className="form-group">
-                                <label>Subjects</label>
+                                <label className="m-3">Subjects</label>
                                 <DropdownButton id="dropdown-basic-button" title="Select Subject">
                                     {data && data.subjects.map(subject => (
                                         <Dropdown.Item onClick={
@@ -35,7 +35,7 @@ const AssignSubjects = ({ studentId }) => {
                                                 });
                                                 handleClose();
                                             }
-                                        }>{subject.name}</Dropdown.Item>
+                                        } key={subject._id}>{subject.name}</Dropdown.Item>
                                     ))}
                                 </DropdownButton>
                             </div>

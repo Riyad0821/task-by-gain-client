@@ -6,7 +6,7 @@ import RemoveSubject from "./RemoveSubject";
 const studentList = (students) => {
     const studentList = students.map((student) => {
         return (
-            <Container key={student.id}>
+            <Container key={student._id}>
                 <Row>
                     <Col><span>{student.name}</span></Col>
                 </Row>
@@ -25,15 +25,15 @@ const Student = ({ _id, name, students }) => {
     return (
         <>
             <tr>
-                <td> {name}</td>
-                <td>{studentList(students)}</td>
-                <td>
+                <td style={{ verticalAlign: "middle" }}> {name}</td>
+                <td style={{ verticalAlign: "middle" }}>{studentList(students)}</td>
+                <td style={{ verticalAlign: "middle" }}>
                     <Button variant="secondary" onClick={handleShow}>
                         Edit
                     </Button>
                     <EditSubject show={show} handleClose={handleClose} _id={_id} name={name} />
                 </td>
-                <td>
+                <td style={{ verticalAlign: "middle" }}>
                     <RemoveSubject _id={_id} />
                 </td>
             </tr>
